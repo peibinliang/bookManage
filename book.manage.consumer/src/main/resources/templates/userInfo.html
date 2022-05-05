@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>用户信息</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    body {
+      background: url("../img/img.png") no-repeat center center fixed;
+      /*兼容浏览器版本*/
+      -webkit-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    .header {
+      width: 100%;
+      height: 120px;
+      background-color: rgba(135, 206, 250, 0.4);
+      font-size: 30px;
+      text-align: center;
+      font-family: SimSun;
+      padding: 10px 0 0;
+    }
+
+    .mainContainer {
+      margin: 0 auto;
+      padding: 15px 0;
+      height: 50%;
+      width: 26%;
+      position: fixed;
+      top: 25%;
+      left: 37%;
+      text-align: center;
+      border: aquamarine 5px solid;
+      border-radius: 30px;
+      background-color: rgba(240, 255, 255, 0.6);
+    }
+
+    table {
+      width: 90%;
+      margin: auto;
+    }
+
+    tr{
+      border-bottom: 1px grey solid;
+    }
+
+    td {
+      line-height: 40px;
+    }
+
+    .left {
+      text-align: left;
+    }
+
+    .right {
+      text-align: right;
+      padding: 0 15px;
+    }
+
+    button {
+      width: 80px;
+      height: 30px;
+      border-radius: 5px;
+    }
+
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>小梁图书管理系统</h1>
+  <p style="text-align: right;font-size: 18px;line-height: 30px">
+    <a href="#">首页</a>&emsp;&emsp;
+    <a href="#">我的图书库</a>&emsp;&emsp;
+    <a href="#">我的</a>&emsp;&emsp;
+    <a href="#">退出登录</a>&emsp;&emsp;&emsp;&emsp;
+  </p>
+</div>
+<div class="mainContainer">
+  <table>
+    <tr>
+      <td colspan="2">
+        <h3>用户信息</h3>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        用&ensp;户&ensp;名
+      </td>
+      <td class="left" th:text="${userInfo.getUserName()}"></td>
+    </tr>
+    <tr>
+      <td class="right">
+        用户昵称
+      </td>
+      <td class="left" th:text="${userInfo.getNickName()}"></td>
+    </tr>
+    <tr>
+      <td class="right">
+        手&ensp;机&ensp;号
+      </td>
+      <td class="left" th:text="${userInfo.getPhone()}"></td>
+    </tr>
+    <tr>
+      <td class="right">
+        邮&emsp;&emsp;箱
+      </td>
+      <td class="left" th:text="${userInfo.getEmail()}"></td>
+    </tr>
+    <tr>
+      <td class="right">用户类型</td>
+      <td class="left" th:text="${userInfo.getUserTypeName()}"></td>
+    </tr>
+    <tr>
+      <td class="right">注册时间</td>
+      <td class="left" th:text="${userInfo.getRegisterTime()}"></td>
+    </tr>
+    <tr>
+      <td class="right">图书库信息</td>
+      <td class="left">
+        <a href="#">我的图书库列表</a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <button onclick="javascript :history.back();">返&ensp;回</button>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

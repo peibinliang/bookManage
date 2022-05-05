@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        body {
+            background: url("../img/background.jpg") no-repeat center center fixed;
+            /*兼容浏览器版本*/
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .mainContainer {
+            margin: 0 auto;
+            padding: 0;
+            height: 50%;
+            width: 60%;
+            position: fixed;
+            top: 25%;
+            left: 20%;
+            text-align: center;
+            border: aquamarine 5px solid;
+            border-radius: 30px;
+            background-color: rgba(240, 255, 255, 0.3);
+        }
+
+        h1 {
+            margin: 5% 0;
+            font-size: 40px;
+            color: rgb(144, 238, 144);
+        }
+
+        h3 {
+            margin-bottom: 5%;
+            margin-left: 25%;
+            font-family: Cursive;
+        }
+
+        button {
+            width: 80px;
+            height: 50px;
+            border: cadetblue 2px solid;
+            border-radius: 10px;
+            background-color: rgba(105, 105, 105, 0.6);
+            margin-top: 5%;
+            font-family: Fantasy;
+            color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+<div class="mainContainer">
+    <h1>欢迎来到小梁图书管理系统</h1>
+    <h3>一个可以属于你一个人的图书管理系统</h3>
+    <button onclick="login()">登录</button>
+</div>
+</body>
+<script type="text/javascript">
+    function login(){
+        window.location.href = "http://localhost:8080/user/login";
+    }
+</script>
+</html>

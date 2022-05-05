@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <title>登录页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        body {
+            background: url("../img/background.jpg") no-repeat center center fixed;
+            /*兼容浏览器版本*/
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .mainContainer {
+            margin: 0 auto;
+            padding: 0;
+            height: 40%;
+            width: 40%;
+            position: fixed;
+            top: 30%;
+            left: 30%;
+            text-align: center;
+            border: aquamarine 5px solid;
+            border-radius: 30px;
+            background-color: rgba(240, 255, 255, 0.3);
+        }
+
+        table {
+            line-height: 50px;
+            height: 50px;
+            width: 100%;
+        }
+
+        .left {
+            text-align: right;
+            padding-right: 15px;
+            width: 40%;
+        }
+
+        .right {
+            text-align: left;
+            padding-left: 15px;
+            width: 60%;
+        }
+
+        input {
+            height: 20px;
+        }
+
+        .button {
+            width: 80px;
+            height: 30px;
+            background-color: antiquewhite;
+            border: aqua 1px solid;
+        }
+
+        #code {
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 18px;
+            color: red;
+            border: 1px solid black;
+            margin: auto 0;
+            cursor: pointer;
+            display: inline-block;
+            vertical-align: middle;
+            background-color: rgba(244, 164, 96,0.6);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="mainContainer">
+    <h1>登&emsp;&emsp;录</h1>
+    <table>
+        <tr>
+            <td class="left">账号</td>
+            <td class="right"><input type="text" name="userName" placeholder="请输入账号......"></td>
+        </tr>
+        <tr>
+            <td class="left">密码</td>
+            <td class="right"><input type="password" name="password" placeholder="请输入密码......"></td>
+        </tr>
+        <tr>
+            <td class="left">验证码</td>
+            <td class="right">
+                <input type="text" name="verificationCode" placeholder="请输入验证码...." style="width: 100px">&emsp;
+                <div id="code"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input value="登录" type="button" onclick="login()" class="button">&emsp;&emsp;
+                <input value="重置" type="reset" onclick="reset()" class="button">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                &emsp;<a href="/user/forgetPassword">忘记密码？</a>&emsp;&emsp;&emsp;
+                <a href="/user/register">没有账号？去注册</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    function login() {
+        let param ={
+            'userName' : $('.mainContainer [name=userName]').val().trim(),
+            'password' : $('.mainContainer [name=password]').val().trim(),
+            'verificationCode' : $('.mainContainer [name=verificationCode]').val().trim(),
+            'code' : $('.mainContainer #code').text()
+        }
+        console.log(param)
+        if ( param.userName === "" || param.userName == null){
+            alert("请填写账号，账号不能为空");
+            getCode();
+            return;
+        }
+        if ( param.password === "" || param.password == null){
+            alert("请填写密码，密码不能为空");
+            getCode();
+            return;
+        }
+        if (param.verificationCode == null || param.verificationCode === ""){
+            alert("验证码不能为空");
+            return;
+        }else if (param.verificationCode.toUpperCase() !== param.code.toUpperCase()){
+            alert("验证码错误");
+            return;
+        }
+        $.post("http://localhost:8080/user/loginCheck",param,function (resp){
+            console.log("响应对象："+resp)
+            if (resp.code === "SUCCESS"){
+                console.log("登录成功");
+                window.location.href="http://localhost:8080/user/main";
+            }else {
+                $('.mainContainer [name=password]').val("");
+                alert(resp.message);
+            }
+        })
+
+    }
+
+    function reset() {
+        window.location.reload();
+    }
+
+    let codeStr = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let oDiv = document.getElementById('code');
+
+    // 用来生成随机整数
+    function getRandom(n, m) { // param: (Number, Number)
+        n = Number(n);
+        m = Number(m);
+        // 确保 m 始终大于 n
+        if (n > m) {
+            let temp = n;
+            n = m;
+
+            m = temp;
+        }
+        // 下有详细说明
+        return Math.floor(Math.random() * (m - n) + n);
+    }
+
+    // 将随机生成的整数下标对应的字母放入div中
+    function getCode() {
+        let str = '';
+        // 验证码有几位就循环几次
+        for (let i = 0; i < 4; i++) {
+            let ran = getRandom(0, 62);
+            str += codeStr.charAt(ran);
+        }
+        oDiv.innerHTML = str;
+    }
+
+    getCode();// 调用函数，页面刷新也会刷新验证码
+    // 点击刷新验证码
+    oDiv.onclick = function () {
+        getCode();
+    }
+    $('.mainContainer [name=verificationCode]').val($('.mainContainer #code').text())
+</script>
+</html>

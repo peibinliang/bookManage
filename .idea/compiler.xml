@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="book.manage.common" />
+        <module name="book.manage.provider-service" />
+        <module name="book.manage.provider-startup" />
+        <module name="book.manage.consumer" />
+        <module name="book.manage.provider-service-impl" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="book.manage.common" target="1.8" />
+      <module name="book.manage.consumer" target="1.8" />
+      <module name="book.manage.provider" target="1.8" />
+      <module name="book.manage.provider-service" target="1.8" />
+      <module name="book.manage.provider-service-impl" target="1.8" />
+      <module name="book.manage.provider-startup" target="1.8" />
+      <module name="bookManage" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="book.manage.common" options="-parameters" />
+      <module name="book.manage.consumer" options="-parameters" />
+      <module name="book.manage.provider-service" options="-parameters" />
+      <module name="book.manage.provider-service-impl" options="-parameters" />
+      <module name="book.manage.provider-startup" options="-parameters" />
+    </option>
+  </component>
+</project>

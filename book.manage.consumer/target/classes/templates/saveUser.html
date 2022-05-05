@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>用户注册</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    body {
+      background: url("../img/img.png") no-repeat center center fixed;
+      /*兼容浏览器版本*/
+      -webkit-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    .header {
+      width: 100%;
+      height: 120px;
+      background-color: rgba(135, 206, 250, 0.4);
+      font-size: 30px;
+      text-align: center;
+      font-family: SimSun;
+      padding: 10px 0 0;
+    }
+
+    .mainContainer {
+      margin: 0 auto;
+      padding: 15px 0;
+      height: 50%;
+      width: 26%;
+      position: fixed;
+      top: 25%;
+      left: 37%;
+      text-align: center;
+      border: aquamarine 5px solid;
+      border-radius: 30px;
+      background-color: rgba(240, 255, 255, 0.6);
+    }
+
+    table {
+      width: 80%;
+      margin: auto;
+    }
+
+    td {
+      line-height: 40px;
+    }
+
+    .left {
+      text-align: left;
+    }
+
+    .right {
+      text-align: right;
+      padding: 0 15px;
+    }
+
+    button {
+      width: 80px;
+      height: 30px;
+      border-radius: 5px;
+    }
+
+    #code {
+      text-align: center;
+      width: 55px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 18px;
+      color: red;
+      border: 1px solid black;
+      margin: auto 0;
+      cursor: pointer;
+      display: inline-block;
+      vertical-align: middle;
+      background-color: rgba(244, 164, 96, 0.6);
+    }
+
+    .msg {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>小梁图书管理系统</h1>
+  <p style="text-align: right;font-size: 18px;line-height: 30px">
+    <a href="#">首页</a>&emsp;&emsp;
+    <a href="#">我的图书库</a>&emsp;&emsp;
+    <a href="#">我的</a>&emsp;&emsp;
+    <a href="#">退出登录</a>&emsp;&emsp;&emsp;&emsp;
+  </p>
+</div>
+<div class="mainContainer">
+  <table>
+    <tr>
+      <td colspan="2">
+        <h3>用户注册</h3>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        用&ensp;户&ensp;名
+      </td>
+      <td class="left">
+        <input type="text" name="userName" placeholder="请输入用户名......">&emsp;
+        <span class="msg">*</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        用户昵称
+      </td>
+      <td class="left">
+        <input type="text" name="nickName" placeholder="请输入用户昵称......">
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        手&ensp;机&ensp;号
+      </td>
+      <td class="left">
+        <input type="text" name="phone" placeholder="请输入手机号.....">&emsp;
+        <span class="msg">*</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        邮&emsp;&emsp;箱
+      </td>
+      <td class="left">
+        <input type="text" name="email" placeholder="请输入邮箱.....">
+      </td>
+    </tr>
+    <tr>
+      <td class="right">用户类型</td>
+      <td class="left">
+        <label><input type="radio" value="1" name="userType">管理员</label>
+        <label><input type="radio" value="2" name="userType">普通用户</label>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        密&emsp;&emsp;码
+      </td>
+      <td class="left">
+        <input type="password" name="password" placeholder="请输入密码......">&emsp;
+        <span class="msg">*</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        确认密码
+      </td>
+      <td class="left">
+        <input type="password" name="password2" placeholder="请确认密码......">&emsp;
+        <span class="msg">*</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        验&ensp;证&ensp;码
+      </td>
+      <td class="left">
+        <input type="text" name="verificationCode" placeholder="请输入验证码......" style="width: 100px">&ensp;
+        <div id="code"></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        <button onclick="modify()">注&ensp;册</button>
+      </td>
+      <td class="left" style="padding-left: 30px;">
+        <button onclick="reset()">重&ensp;置</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<script type="text/javascript">
+  function modify() {
+    let param = {
+      'userName': $('.mainContainer [name=userName]').val().trim(),
+      'nickName': $('.mainContainer [name=nickName]').val().trim(),
+      'phone': $('.mainContainer [name=phone]').val().trim(),
+      'email': $('.mainContainer [name=email]').val().trim(),
+      'userType':$('.mainContainer [name=userType]:checked').val(),
+      'password': $('.mainContainer [name=password]').val().trim(),
+      'password2': $('.mainContainer [name=password2]').val().trim(),
+      'verificationCode': $('.mainContainer [name=verificationCode]').val().trim(),
+      'code': $('.mainContainer #code').text()
+    }
+
+    if (param.userName == null || param.userName === "") {
+      alert("用户名不能为空");
+      getCode();
+      return;
+    }
+
+    if (param.nickName == null || param.nickName === "") {
+      alert("用户昵称不能为空");
+      getCode();
+      return;
+    }
+
+    if (param.phone == null || param.phone === "") {
+      alert("手机号不能为空");
+      getCode();
+      return;
+    }
+
+    if (param.userType == null){
+      alert("用户类型不能为空");
+      getCode();
+      return;
+    }
+
+    if (param.password == null || param.password === "" || param.password2 == null || param.password2 === "") {
+      alert("密码不能为空");
+      getCode()
+      return;
+    } else if (param.password !== param.password2) {
+      alert("两次密码不一致");
+      $('.mainContainer [name=password]').val("");
+      $('.mainContainer [name=password2]').val("");
+      return;
+    }
+
+    if (param.verificationCode == null || param.verificationCode === "") {
+      alert("验证码不能为空");
+      getCode();
+      return;
+    } else if (param.verificationCode.toUpperCase() !== param.code.toUpperCase()) {
+      alert("验证码错误");
+      getCode();
+      return;
+    }
+
+    $.post("http://localhost:8080/user/registerDo", param, function (resp) {
+      if (resp.code === "SUCCESS") {
+        console.log("注册成功");
+        alert("注册成功");
+        window.location.href = "http://localhost:8080/user/login";
+        return;
+      } else {
+        alert(resp.message);
+      }
+    });
+  }
+
+  function reset() {
+    window.location.reload();
+  }
+
+  let codeStr = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let oDiv = document.getElementById('code');
+
+  // 用来生成随机整数
+  function getRandom(n, m) { // param: (Number, Number)
+    n = Number(n);
+    m = Number(m);
+    // 确保 m 始终大于 n
+    if (n > m) {
+      let temp = n;
+      n = m;
+
+      m = temp;
+    }
+    // 下有详细说明
+    return Math.floor(Math.random() * (m - n) + n);
+  }
+
+  // 将随机生成的整数下标对应的字母放入div中
+  function getCode() {
+    let str = '';
+    // 验证码有几位就循环几次
+    for (let i = 0; i < 4; i++) {
+      let ran = getRandom(0, 62);
+      str += codeStr.charAt(ran);
+    }
+    oDiv.innerHTML = str;
+  }
+
+  getCode();// 调用函数，页面刷新也会刷新验证码
+  // 点击刷新验证码
+  oDiv.onclick = function () {
+    getCode();
+  }
+</script>
+</body>
+</html>

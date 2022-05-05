@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        body {
+            background: url("../img/img.png") no-repeat center center fixed;
+            /*兼容浏览器版本*/
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            text-align: center;
+        }
+
+        .header {
+            width: 100%;
+            height: 120px;
+            background-color: rgba(135, 206, 250, 0.4);
+            font-size: 30px;
+            text-align: center;
+            font-family: SimSun;
+            padding: 10px 0 0;
+        }
+
+        .mainContainer {
+            margin: 0 auto;
+            padding: 15px 0;
+            height: 50%;
+            width: 64%;
+            position: fixed;
+            top: 25%;
+            left: 18%;
+            text-align: center;
+            border: aquamarine 5px solid;
+            border-radius: 30px;
+            background-color: rgba(240, 255, 255, 0.6);
+        }
+
+        table {
+            width: 94%;
+            margin: auto;
+        }
+
+        tr {
+            border-bottom: 1px grey solid;
+        }
+
+        td {
+            line-height: 40px;
+        }
+
+        .right {
+            text-align: right;
+            padding: 0 15px;
+        }
+
+        button {
+            width: 80px;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+        img {
+            width: 15px;
+            height: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>小梁图书管理系统</h1>
+    <p style="text-align: right;font-size: 18px;line-height: 30px">
+        <a href="#">首页</a>&emsp;&emsp;
+        <a href="#">我的图书库</a>&emsp;&emsp;
+        <a href="#">我的</a>&emsp;&emsp;
+        <a href="#">退出登录</a>&emsp;&emsp;&emsp;&emsp;
+    </p>
+</div>
+<div class="mainContainer">
+    <h3>用户列表</h3>
+    <div th:if="${ userList.size()>0}">
+        <div class="divGrid">
+            <table style="width:900px; margin:0px auto;" class="table_border table_border_bg table_hover">
+                <tr class="tr_header">
+                    <td>用&ensp;户&ensp;名</td>
+                    <td>用户昵称</td>
+                    <td>手机号码</td>
+                    <td>邮&emsp;&emsp;箱</td>
+                    <td>用户角色</td>
+                    <td>注册时间</td>
+                    <td style="width:95px;">详情/修改</td>
+                </tr>
+
+                <tr th:each="item:${userList}">
+                    <td th:text="${item.userName}"></td>
+                    <td th:text="${ item.nickName }"></td>
+                    <td th:text="${ item.phone }"></td>
+                    <td th:text="${ item.email }"></td>
+                    <td th:text="${ item.userTypeName }"></td>
+                    <td th:text="${ item.registerTime }"></td>
+                    <td>
+                        <a th:href="'/user/userInfo?userId='+${ item.userId }" title="详情">
+                            <img src="https://pic.imgdb.cn/item/626d32e4239250f7c520ce76.png" border="0"/></a>&emsp;
+                        <a th:href="'/user/modifyUser?userId='+${ item.userId }" title="修改">
+                            <img src="https://pic.imgdb.cn/item/626d32e4239250f7c520ce73.png" border="0"/></a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="7" class="note" style="text-align:right; height:50px;">
+                        （<a href="/user/saveUser">新添用户</a>）
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="text-align: right;">
+            <span th:if="${page==1}">
+              <input type="button" value="上一页" disabled onclick="pre()">&emsp;&emsp;
+            </span>
+                        <span th:if="${page!=1}">
+              <input type="button" value="上一页" onclick="pre()">&emsp;&emsp;
+            </span>
+                        <input type="text" style="width: 50px" th:value="${page}" name="page" style="text-align: center;">&emsp;&emsp;
+                        <span th:if="${page == maxPage}">
+            <input type="button" value="下一页" onclick="next()" disabled>&emsp;&emsp;
+            </span>
+                        <span th:if="${page < maxPage}">
+            <input type="button" value="下一页" onclick="next()">&emsp;&emsp;
+            </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    console.log([[${userList}]])
+
+    function checkAll() {
+        let checkboxList = document.getElementsByName("userId");			//获取复选框列表，得到数组
+        let checkboxAll = document.getElementsByName("checkboxAll")[0];	//全选复选框
+
+        for (let i = 0; i < checkboxList.length; i++) {						//对于列表中的每一个复选框
+            checkboxList[i].checked = checkboxAll.checked;					//此复选框的勾选情况与全选复选框一致
+        }
+    }
+
+    function pre() {
+        let page = {'page': $('.mainContainer [name=page]').val()}
+        page.page = parseInt(page.page) - 1;
+        window.location.href = "http://localhost:8080/user/userList?page=" + page.page;
+    }
+
+    function next() {
+        let page = {'page': $('.mainContainer [name=page]').val()}
+        page.page = parseInt(page.page) + 1;
+        window.location.href = "http://localhost:8080/user/userList?page=" + page.page;
+    }
+</script>
+</html>

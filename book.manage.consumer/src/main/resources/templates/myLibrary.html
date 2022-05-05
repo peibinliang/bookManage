@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的图书库</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        body {
+            background: url("../img/img.png") no-repeat center center fixed;
+            /*兼容浏览器版本*/
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .header {
+            width: 100%;
+            height: 120px;
+            background-color: rgba(135, 206, 250, 0.4);
+            font-size: 30px;
+            text-align: center;
+            font-family: SimSun;
+            padding: 10px 0 0;
+        }
+
+        .mainContainer {
+            margin: 0 auto;
+            padding: 15px 0;
+            height: 50%;
+            width: 26%;
+            position: fixed;
+            top: 25%;
+            left: 37%;
+            text-align: center;
+            border: aquamarine 5px solid;
+            border-radius: 30px;
+            background-color: rgba(240, 255, 255, 0.6);
+        }
+
+        table {
+            width: 90%;
+            margin: auto;
+        }
+
+        tr{
+            border-bottom: 1px grey solid;
+        }
+
+        td {
+            line-height: 40px;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        button {
+            width: 80px;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>小梁图书管理系统</h1>
+    <p style="text-align: right;font-size: 18px;line-height: 30px">
+        <a href="#">首页</a>&emsp;&emsp;
+        <a href="#">我的图书库</a>&emsp;&emsp;
+        <a href="#">我的</a>&emsp;&emsp;
+        <a href="#">退出登录</a>&emsp;&emsp;&emsp;&emsp;
+    </p>
+</div>
+<div class="mainContainer">
+    <table>
+        <tr>
+            <td>
+                <h3>我的图书库</h3>
+            </td>
+        </tr>
+        <tr th:each="item : ${libraryList}">
+            <td>
+                <a th:href="${'/library/bookList?libraryId='+item.libraryId}" th:text="${item.getLibraryName()}">进入图书库</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="javascript :history.back();">返&ensp;回</button>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

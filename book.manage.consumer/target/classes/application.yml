@@ -1,0 +1,25 @@
+# 项目信息
+project:
+  env: DEV
+
+# 服务器配置
+server:
+  port: 8080
+
+# Spring配置
+spring:
+  jackson:
+    time-zone: GMT+8
+    ## 默认日期格式化
+    date-format: yyyy-MM-dd HH:mm
+  thymeleaf:
+    cache: true
+    encoding: UTF-8
+    suffix: .html
+    mode: HTML
+
+# logback信息配置
+logback:
+  level: INFO
+  appender: ${project.env}
+

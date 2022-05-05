@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+  <!-- dubbo应用信息 -->
+  <dubbo:application name="API"/>
+
+  <!-- 配置注册中心，从注册中心发现服务，这里的注册中心为zookeeper -->
+  <dubbo:registry address="zookeeper://127.0.0.1:2181" timeout="1500"/>
+
+  <!-- 声明服务消费 -->
+  <dubbo:reference id="welcomeService" interface="com.book.manage.sample.service.WelcomeService" />
+  <dubbo:reference id="UserService" interface="com.book.manage.sample.service.UserService"/>
+
+</beans>

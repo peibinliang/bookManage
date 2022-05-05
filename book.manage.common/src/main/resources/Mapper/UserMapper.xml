@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.manage.core.Mapper.UserMapper">
+
+    <select id="getUserByUserName" resultType="com.book.manage.core.dto.resp.UserRespDto">
+        select *
+        from user
+        where user_name like #{userName}
+          and is_deleted = 0
+    </select>
+
+    <select id="listUser" resultType="com.book.manage.core.dto.resp.UserRespDto">
+        select *
+        from user
+        where is_deleted = 0
+        order by user_id Asc
+            limit #{start}, 5
+    </select>
+
+    <select id="getUserListSize" resultType="java.lang.Integer">
+        select count(*)
+        from user
+        where is_deleted = 0
+    </select>
+</mapper>

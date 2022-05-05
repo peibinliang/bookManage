@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/book.manage.common/book.manage.common.iml" filepath="$PROJECT_DIR$/book.manage.common/book.manage.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book.manage.consumer/book.manage.consumer.iml" filepath="$PROJECT_DIR$/book.manage.consumer/book.manage.consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book.manage.provider/book.manage.provider.iml" filepath="$PROJECT_DIR$/book.manage.provider/book.manage.provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book.manage.provider/book.manage.provider-service/book.manage.provider-service.iml" filepath="$PROJECT_DIR$/book.manage.provider/book.manage.provider-service/book.manage.provider-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book.manage.provider/book.manage.provider-service-impl/book.manage.provider-service-impl.iml" filepath="$PROJECT_DIR$/book.manage.provider/book.manage.provider-service-impl/book.manage.provider-service-impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book.manage.provider/book.manage.provider-startup/book.manage.provider-startup.iml" filepath="$PROJECT_DIR$/book.manage.provider/book.manage.provider-startup/book.manage.provider-startup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bookManage.iml" filepath="$PROJECT_DIR$/bookManage.iml" />
+    </modules>
+  </component>
+</project>

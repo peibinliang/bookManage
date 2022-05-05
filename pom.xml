@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.book.manage</groupId>
+  <artifactId>bookManage</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.6.RELEASE</version>
+  </parent>
+
+  <properties>
+    <module.version>1.0-SNAPSHOT</module.version>
+    <dubbo.version>2.6.3</dubbo.version>
+    <zookeeper.version>3.4.13</zookeeper.version>
+    <curator.version>4.0.1</curator.version>
+    <mybatis.version>1.3.0</mybatis.version>
+    <druid.version>1.1.0</druid.version>
+  </properties>
+
+  <dependencies>
+    <!-- lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <!-- 核心工程 -->
+    <dependency>
+      <groupId>com.book.manage</groupId>
+      <artifactId>book.manage.common</artifactId>
+    </dependency>
+    <!-- 工具包 -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+    </dependency>
+  </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Dubbo -->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo</artifactId>
+        <version>${dubbo.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+        <version>${curator.version}</version>
+      </dependency>
+      <!-- mybatis -->
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>${mybatis.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
+      <!-- Zookeeper -->
+      <dependency>
+        <groupId>org.apache.zookeeper</groupId>
+        <artifactId>zookeeper</artifactId>
+        <version>${zookeeper.version}</version>
+      </dependency>
+      <!-- 核心工程 -->
+      <dependency>
+        <groupId>com.book.manage</groupId>
+        <artifactId>book.manage.common</artifactId>
+        <version>${module.version}</version>
+      </dependency>
+      <!-- 服务 -->
+      <dependency>
+        <groupId>com.book.manage</groupId>
+        <artifactId>book.manage.provider-service</artifactId>
+        <version>${module.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.book.manage</groupId>
+        <artifactId>book.manage.provider-service-impl</artifactId>
+        <version>${module.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <modules>
+    <module>book.manage.consumer</module>
+    <module>book.manage.provider</module>
+    <module>book.manage.common</module>
+  </modules>
+</project>

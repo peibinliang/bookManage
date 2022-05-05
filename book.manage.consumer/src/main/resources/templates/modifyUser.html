@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>用户信息</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    body {
+      background: url("../img/img.png") no-repeat center center fixed;
+      /*兼容浏览器版本*/
+      -webkit-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    .header {
+      width: 100%;
+      height: 120px;
+      background-color: rgba(135, 206, 250, 0.4);
+      font-size: 30px;
+      text-align: center;
+      font-family: SimSun;
+      padding: 10px 0 0;
+    }
+
+    .mainContainer {
+      margin: 0 auto;
+      padding: 15px 0;
+      height: 50%;
+      width: 26%;
+      position: fixed;
+      top: 25%;
+      left: 37%;
+      text-align: center;
+      border: aquamarine 5px solid;
+      border-radius: 30px;
+      background-color: rgba(240, 255, 255, 0.6);
+    }
+
+    table {
+      width: 90%;
+      margin: auto;
+    }
+
+    tr{
+      border-bottom: 1px grey solid;
+    }
+
+    td {
+      line-height: 40px;
+    }
+
+    .left {
+      text-align: left;
+    }
+
+    .right {
+      text-align: right;
+      padding: 0 15px;
+    }
+
+    button {
+      width: 80px;
+      height: 30px;
+      border-radius: 5px;
+    }
+
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>小梁图书管理系统</h1>
+  <p style="text-align: right;font-size: 18px;line-height: 30px">
+    <a href="#">首页</a>&emsp;&emsp;
+    <a href="#">我的图书库</a>&emsp;&emsp;
+    <a href="#">我的</a>&emsp;&emsp;
+    <a href="#">退出登录</a>&emsp;&emsp;&emsp;&emsp;
+  </p>
+</div>
+<div class="mainContainer">
+  <table>
+    <tr>
+      <td colspan="2">
+        <h3>用户信息</h3>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">
+        用&ensp;户&ensp;名
+      </td>
+      <td class="left" th:if="${session.user.userType == 2}">
+        <input type="text" th:value="${userInfo.getUserName()}" name="userName">
+      </td>
+      <td class="left" th:if="${session.user.userType == 1}" th:text="${userInfo.getUserName()}"></td>
+    </tr>
+    <tr>
+      <td class="right">
+        用户昵称
+      </td>
+      <td class="left" th:if="${session.user.userType == 2}">
+        <input type="text" th:value="${userInfo.getNickName()}" name="nickName">
+      </td>
+      <td class="left" th:if="${session.user.userType == 1}" th:text="${userInfo.getNickName()}"></td>
+    </tr>
+    <tr>
+      <td class="right">
+        手&ensp;机&ensp;号
+      </td>
+      <td class="left"  th:if="${session.user.userType == 2}">
+        <input type="text" th:value="${userInfo.getPhone()}" name="phone">
+      </td>
+      <td class="left" th:if="${session.user.userType == 1}" th:text="${userInfo.getPhone()}"></td>
+    </tr>
+    <tr>
+      <td class="right">
+        邮&emsp;&emsp;箱
+      </td>
+      <td class="left" th:if="${session.user.userType == 2}">
+        <input type="text" th:value="${userInfo.getEmail()}">
+      </td>
+      <td class="left" th:if="${session.user.userType == 1}" th:text="${userInfo.getEmail()}"></td>
+    </tr>
+    <tr>
+      <td class="right">用户类型</td>
+      <td class="left" th:if="${session.user.userType == 2}" th:text="${userInfo.getUserTypeName()}"></td>
+      <td class="left" th:if="${session.user.userType == 1}">
+        <label><input type="radio" value="1" name="userType">管理员</label>
+        <label><input type="radio" value="2" name="userType">普通用户</label>
+      </td>
+    </tr>
+    <tr>
+      <td class="right">注册时间</td>
+      <td class="left" th:text="${userInfo.getRegisterTime()}"></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <button onclick="javascript :history.back();">返&ensp;回</button>&emsp;&emsp;&emsp;&emsp;
+        <button onclick="modify()">修改</button>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    function modify(){
+      let param = {
+        'userId':[[${userInfo.userId}]],
+        'userName': $('.mainContainer [name=userName]').val(),
+        'nickName': $('.mainContainer [name=nockName]').val(),
+        'phone':$('.mainContainer [name=phone]').val(),
+        'email':$('.mainContainer [name=email]').val(),
+        'userType':$('.mainContainer [name=userType]:checked').val(),
+        'userTypeName':''
+      }
+      if (parseInt(param.userType) === 1){
+        param.userTypeName = "管理员"
+      }else{
+        param.userTypeName = "普通用户"
+      }
+      console.log(param);
+      $.post("http://localhost:8080/user/modifyUserDo",param,function (resp){
+        if (resp.code === "SUCCESS"){
+          alert("修改成功");
+          self.location=document.referrer;
+          return;
+        }else {
+          alert(resp.message);
+        }
+      })
+    }
+</script>
+</html>
