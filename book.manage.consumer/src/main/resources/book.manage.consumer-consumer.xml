@@ -13,7 +13,10 @@
   <dubbo:registry address="zookeeper://127.0.0.1:2181" timeout="1500"/>
 
   <!-- 声明服务消费 -->
-  <dubbo:reference id="welcomeService" interface="com.book.manage.sample.service.WelcomeService" />
-  <dubbo:reference id="UserService" interface="com.book.manage.sample.service.UserService"/>
+  <dubbo:reference id="welcomeService" interface="com.book.manage.sample.service.WelcomeService"  timeout="60000"/>
+  <dubbo:reference id="userService" interface="com.book.manage.sample.service.UserService" timeout="60000"/>
+  <dubbo:reference id="libraryService" interface="com.book.manage.sample.service.LibraryService" timeout="60000"/>
+  <dubbo:reference id="bookService" interface="com.book.manage.sample.service.BookService" timeout="60000"/>
+  <dubbo:reference id="libraryLogService" interface="com.book.manage.sample.service.LibraryLogService" timeout="60000"/>
 
 </beans>

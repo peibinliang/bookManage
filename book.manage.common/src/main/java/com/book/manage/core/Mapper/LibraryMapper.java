@@ -22,4 +22,11 @@ public interface LibraryMapper extends BaseMapper<Library> {
      * @return
      */
     List<LibraryRespDto> listLibraryByUser(@Param("userId") Integer userId);
+
+    /**
+     * 根据图书库名称查看图书库
+     * @param libraryName
+     * @return
+     */
+    LibraryRespDto getLibraryByLibraryName(@Param("libraryName") String libraryName);
 }

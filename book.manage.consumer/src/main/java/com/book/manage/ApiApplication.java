@@ -18,8 +18,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @ComponentScan(basePackages = {"com.book.manage","com.book.manage.interceptor"})
 @DubboComponentScan("com.bncloud")
 @Slf4j
-//@EnableCreateCacheAnnotation
-//@EnableMethodCache(basePackages = {"com.bncloud"})
 public class ApiApplication {
 
     public static void main(String[] args) {

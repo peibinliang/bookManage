@@ -18,7 +18,9 @@
   <dubbo:protocol name="dubbo" port="20880"/>
 
   <!-- 暴露接口 -->
-  <dubbo:service interface="com.book.manage.sample.service.WelcomeService" ref="welcomeService" />
-  <dubbo:service interface="com.book.manage.sample.service.UserService" ref="userService"/>
-  <dubbo:service interface="com.book.manage.sample.service.LibraryService" ref="libraryService"/>
+  <dubbo:service interface="com.book.manage.sample.service.WelcomeService" ref="welcomeService" timeout="60000" />
+  <dubbo:service interface="com.book.manage.sample.service.UserService" ref="userService" timeout="60000"/>
+  <dubbo:service interface="com.book.manage.sample.service.LibraryService" ref="libraryService" timeout="60000"/>
+  <dubbo:service interface="com.book.manage.sample.service.BookService" ref="bookService" timeout="60000"/>
+  <dubbo:service interface="com.book.manage.sample.service.LibraryLogService" ref="libraryLogService" timeout="60000"/>
 </beans>

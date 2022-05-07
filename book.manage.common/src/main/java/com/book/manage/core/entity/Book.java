@@ -3,6 +3,7 @@ package com.book.manage.core.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,7 +11,8 @@ import lombok.Data;
 
 @Data
 @ApiModel("书籍实体对象")
-public class Books extends Model<Books> {
+@TableName("book")
+public class Book extends Model<Book> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -54,7 +56,7 @@ public class Books extends Model<Books> {
 	 */
 	@ApiModelProperty(value = "出版时间")
 	@TableField("gmt_publication")
-	private java.util.Date gmtPublication;
+	private String gmtPublication;
 
 	/**
 	 * ISBN号码
@@ -89,14 +91,14 @@ public class Books extends Model<Books> {
 	 */
 	@ApiModelProperty(value = "创建时间")
 	@TableField("gmt_create")
-	private java.util.Date gmtCreate;
+	private String gmtCreate;
 
 	/**
 	 * 最后修改时间
 	 */
 	@ApiModelProperty(value = "最后修改时间")
 	@TableField("gmt_modify")
-	private java.util.Date gmtModify;
+	private String gmtModify;
 
 
 }

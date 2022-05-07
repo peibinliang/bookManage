@@ -42,7 +42,7 @@ public class LibraryLog extends Model<LibraryLog> {
 	private Integer modifyType;
 
 	@TableField("gmt_create")
-	private java.util.Date gmtCreate;
+	private String gmtCreate;
 
 
 }

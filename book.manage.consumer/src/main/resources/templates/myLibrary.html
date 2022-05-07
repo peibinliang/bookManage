@@ -87,7 +87,7 @@
         </tr>
         <tr th:each="item : ${libraryList}">
             <td>
-                <a th:href="${'/library/bookList?libraryId='+item.libraryId}" th:text="${item.getLibraryName()}">进入图书库</a>
+                <a th:href="${'/book/bookList?libraryId='+item.libraryId}" th:text="${item.getLibraryName()}">进入图书库</a>
             </td>
         </tr>
         <tr>

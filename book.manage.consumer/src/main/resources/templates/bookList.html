@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>书籍列表</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    body {
+      background: url("../img/img.png") no-repeat center center fixed;
+      /*兼容浏览器版本*/
+      -webkit-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      text-align: center;
+    }
+
+    .header {
+      width: 100%;
+      height: 120px;
+      background-color: rgba(135, 206, 250, 0.4);
+      font-size: 30px;
+      text-align: center;
+      font-family: SimSun;
+      padding: 10px 0 0;
+    }
+
+    .mainContainer {
+      margin: 0 auto;
+      padding: 15px 0;
+      height: 50%;
+      width: 76%;
+      position: fixed;
+      top: 25%;
+      left: 12%;
+      text-align: center;
+      border: aquamarine 5px solid;
+      border-radius: 30px;
+      background-color: rgba(240, 255, 255, 0.6);
+    }
+
+    table {
+      width: 94%;
+      margin: auto;
+    }
+
+    tr {
+      border-bottom: 1px grey solid;
+    }
+
+    td {
+      line-height: 40px;
+    }
+
+    button {
+      width: 80px;
+      height: 30px;
+      border-radius: 5px;
+    }
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>小梁图书管理系统</h1>
+  <p style="text-align: right;font-size: 18px;line-height: 30px">
+    <a href="#">首页</a>&emsp;&emsp;
+    <a href="#">我的图书库</a>&emsp;&emsp;
+    <a href="#">我的</a>&emsp;&emsp;
+    <a href="#">退出登录</a>&emsp;&emsp;&emsp;&emsp;
+  </p>
+</div>
+<div class="mainContainer">
+  <h3>书籍列表</h3>
+  <div th:if="${ bookList.size()<=0}"></div>
+  暂无书籍！<a th:href="${'/book/saveBook?libaryId='+libraryId}">快去添加书籍吧</a>
+  <div th:if="${ bookList.size()>0}">
+    <div class="divGrid">
+      <div style="text-align: left;padding-right: 20px;">
+        <input name="search" placeholder="根据书籍名称、作者、出版社搜索">
+        <input onclick="search()">
+      </div>
+      <table style="width:1150px; margin:0px auto;" class="table_border table_border_bg table_hover">
+        <tr class="tr_header">
+          <td>书籍名称</td>
+          <td>书籍作者</td>
+          <td>书籍类型</td>
+          <td>书籍出版社</td>
+          <td>出版时间</td>
+          <td>ISBN</td>
+          <td>库存</td>
+          <td>创建时间</td>
+          <td>最后修改时间</td>
+          <td style="width:95px;">修改</td>
+        </tr>
+
+        <tr th:each="item:${bookList}">
+          <td th:text="${item.bookName}"></td>
+          <td th:text="${ item.author }"></td>
+          <td th:text="${ item.typeName }"></td>
+          <td th:text="${ item.press }"></td>
+          <td th:text="${ item.gmtPublication }"></td>
+          <td th:text="${ item.isbn }"></td>
+          <td th:text="${ item.stock }"></td>
+          <td th:text="${ item.gmtCreate}"></td>
+          <td th:text="${ item.gmtModify }"></td>
+          <td>
+            <a th:href="'/book/bookInfo?bookId='+${ item.bookId }" title="详情">
+              <img src="https://pic.imgdb.cn/item/626d32e4239250f7c520ce76.png" border="0"/></a>&emsp;
+            <a th:href="'/book/modifyBook?bookId='+${ item.bookId }" title="修改">
+              <img src="https://pic.imgdb.cn/item/626d32e4239250f7c520ce73.png" border="0"/></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="11" class="note" style="text-align:right; height:50px;">
+            （<a th:href="${'/book/saveBook?libraryId='+${libraryId}}">新添书籍</a>）
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+  function checkAll() {
+    let checkboxList = document.getElementsByName("bookId");			//获取复选框列表，得到数组
+    let checkboxAll = document.getElementsByName("checkboxAll")[0];	//全选复选框
+
+    for (let i = 0; i < checkboxList.length; i++) {						//对于列表中的每一个复选框
+      checkboxList[i].checked = checkboxAll.checked;					//此复选框的勾选情况与全选复选框一致
+    }
+  }
+
+  function removeBook(){
+    if (confirm("确认删除所选书籍？")){
+      let bookIds = document.getElementsByName("bookId");
+      for (let i = 0; i < bookIds.length;i++){
+        if (bookIds[i].checked == true){
+          $.post("http://localhost:8080/book/removeBook",bookIds[i].value,function (resp){
+            if (resp.code === "SUCCESS"){
+              console.log("BookId为"+bookIds[i].value+"的书籍已删除");
+            }else {
+              alert("BookId为"+bookIds[i].value+"的书籍删除失败");
+              return;
+            }
+          })
+          alert("删除书籍成功")
+        }
+      }
+    }
+  }
+
+  function search(){
+    let param = {
+      'search':$('.mainContainer [name=search]').val(),
+      'libraryId':[[${libraryId}]]
+    }
+
+    $.post("http://localhost:8080/book/searchBook",param,function (resp){
+      if (resp.code !== "SUCCESS"){
+        alert("查询失败")
+      }
+    })
+  }
+</script>
+</html>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>我的图书库</title>
+    <title>编辑图书库</title>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <style>
         * {
@@ -32,11 +32,11 @@
         .mainContainer {
             margin: 0 auto;
             padding: 15px 0;
-            height: 50%;
-            width: 26%;
+            height: 60%;
+            width: 30%;
             position: fixed;
-            top: 25%;
-            left: 37%;
+            top: 20%;
+            left: 35%;
             text-align: center;
             border: aquamarine 5px solid;
             border-radius: 30px;
@@ -60,6 +60,11 @@
             text-align: left;
         }
 
+        .right {
+            text-align: right;
+            padding: 0 15px;
+        }
+
         button {
             width: 80px;
             height: 30px;
@@ -81,21 +86,43 @@
 <div class="mainContainer">
     <table>
         <tr>
-            <td>
-                <h3>我的图书库</h3>
-            </td>
-        </tr>
-        <tr th:each="item : ${libraryList}">
-            <td>
-                <a th:href="${'/book/bookList?libraryId='+item.libraryId}" th:text="${item.getLibraryName()}">进入图书库</a>
+            <td colspan="2">
+                <h3>编辑图书库</h3>
             </td>
         </tr>
         <tr>
-            <td>
-                <button onclick="javascript :history.back();">返&ensp;回</button>
+            <td class="right">
+                图书库名称
+            </td>
+            <td class="left">
+                <input type="text" name="libraryName" th:value="${libraryInfo.getLibraryName()}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button onclick="javascript :history.back();">返&ensp;回</button>&emsp;&emsp;&emsp;&emsp;
+                <button onclick="save()">修改</button>
             </td>
         </tr>
     </table>
 </div>
 </body>
+<script type="text/javascript" th:inline="javascript">
+    function save(){
+        let param = {
+            'bookName':$('.mainContainer [name=bookName]').val(),
+            "libraryId":[[${libraryInfo.libraryId}]]
+        }
+
+        $.post("http://localhost:8080/library/modifyLibraryDo",param,function (resp){
+            if (resp.code === "SUCCESS"){
+                alert("修改成功");
+                self.location=document.referrer;
+                return;
+            }else {
+                alert(resp.message);
+            }
+        })
+    }
+</script>
 </html>

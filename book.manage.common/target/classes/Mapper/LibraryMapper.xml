@@ -8,4 +8,10 @@
                  inner join user_relation b on a.library_id = b.library_id
         where b.user_id = #{userId}
     </select>
+
+    <select id="getLibraryByLibraryName" resultType="com.book.manage.core.dto.resp.LibraryRespDto">
+        select *
+        from library
+        where library_name like #{libraryName}
+    </select>
 </mapper>
